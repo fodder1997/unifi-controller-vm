@@ -5,8 +5,10 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu-14.04"
   config.vm.box_download_checksum_type = "sha256"
-  config.vm.box_download_checksum = "b39ccb6013084d8487bb8240cab74c2fa10aa4a4a6134d10e87e006d61b9681d"
-  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/20150924/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  #config.vm.box_download_checksum = "b39ccb6013084d8487bb8240cab74c2fa10aa4a4a6134d10e87e006d61b9681d"
+  config.vm.box_download_checksum = "8d5fd0a90d0cffd8a5ed84e608ee8665475efb7370da80c03653390f46de026b"
+  #config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/20150924/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
   # Use bridged network adapter for VM
   # http://docs.vagrantup.com/v2/networking/public_network.html
@@ -31,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # http://www.ubnt.com/download/unifi/
     cd /home/vagrant
-    UNIFI_VERSION="4.7.5"
+    UNIFI_VERSION="4.8.20"
     UNIFI_FILENAME="unifi_sysvinit_all.deb"
     wget https://www.ubnt.com/downloads/unifi/$UNIFI_VERSION/$UNIFI_FILENAME
     sha256sum -c /vagrant/sha256.txt && dpkg -i $UNIFI_FILENAME
