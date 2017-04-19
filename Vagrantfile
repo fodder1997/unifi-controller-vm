@@ -12,14 +12,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Use bridged network adapter for VM
   # http://docs.vagrantup.com/v2/networking/public_network.html
-  config.vm.network "public_network"
+  config.vm.network "public_network", bridge: "eth0", ip: "192.168.2.110"
 
+
+  config.vm.provider "virtualbox" do |v|
+  	v.memory = 2048
+  end
+  
   # Map web interface to localhost - as a convenience
   # https://localhost:8443
   # config.vm.network :forwarded_port, host: 8443, guest: 8443
 
   config.vm.provision "shell", inline: <<-shell
     set -e;
+
+    # Add support for future upgrades via apt
+    sudo cat "deb http://www.ubnt.com/downloads/unifi/debian unifi5 ubiquiti" > /etc/apt/sources.list.d/100-ubnt.list
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv C0A52C50
+    sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 06E85760C0A52C50
+
+    echo "Unifi Controller v$UNIFI_VERSION is now listening at"
 
     apt-get update
     apt-get upgrade -y --force-yes
